@@ -1,67 +1,60 @@
-# Payload Blank Template
+# Payload CMS Technology Exploration
 
-This template comes configured with the bare minimum to get started on anything you need.
+## About This Project
 
-## Quick start
+This repository represents my hands-on exploration of Payload CMS as a potential solution for a client rebuild, as well as my personal curiosity about modern headless CMS capabilities. As a tech team lead transitioning back to development roles, I believe in thoroughly understanding technologies before recommending them—and the best way to do that is to build with them.
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+## The Real-World Context
 
-## Quick Start - local setup
+My client is approaching a website rebuild with specific requirements: they need performance, ease of editing, and custom development capabilities. Coming from WordPress, they're concerned about performance limitations and development complexity as their business requirements grow. After evaluating the headless CMS landscape—including Contentful, Sanity, and WordPress headless—Payload stood out for its open-source nature and developer-friendly architecture.
 
-To spin up this template locally, follow these steps:
+Their needs include a marketing website with integrated appointment booking and e-commerce capabilities. This project serves as both a technical evaluation and a proof-of-concept.
 
-### Clone
+## The Prototype: Hockey League Management Platform
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+Rather than build a generic demo, I chose to prototype something I understand from personal experience: a sports league discovery and management platform. Having played men's league hockey and dealt with less-than-ideal scheduling systems firsthand, I know the pain points that need solving.
 
-### Development
+This prototype explores:
+- Complex content structures with intuitive admin experiences
+- Rich text editing combined with custom blocks
+- Custom business logic implementation
+- Scalable data relationships
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URI` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+## My Technology Evaluation Approach
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+My process for evaluating new technologies follows several phases:
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+1. **Continuous Awareness** - I maintain an active mental inventory of emerging technologies through social media, YouTube, newsletters (TL;DR has been particularly valuable), and increasingly, in-person tech events.
 
-#### Docker (Optional)
+2. **Needs-Based Pairing** - When requirements arise, I match known technologies to specific needs or research new options that fit the criteria.
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+3. **Community Validation** - I read reviews and community feedback to understand real-world experiences.
 
-To do so, follow these steps:
+4. **Documentation Deep-Dive** - I thoroughly review official documentation and demos.
 
-- Modify the `MONGODB_URI` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URI` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+5. **Hands-On Prototyping** - Most importantly, I build. I'm a hands-on person—you can't truly understand a technology until you've wrestled with its quirks and discovered its capabilities through actual development.
 
-## How it works
+## Key Payload Explorations
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+This project specifically investigates:
 
-### Collections
+- **Custom Logic Implementation** - How easily can complex business rules be implemented within Payload's architecture?
+- **Content Complexity vs. Admin Simplicity** - Can we build sophisticated content structures while keeping the editing experience intuitive?
+- **Rich Content Management** - Exploring the balance between Payload's rich text editor and custom blocks for flexible content creation.
+- **Next.js Integration** - Leveraging Payload's embedded Next.js architecture for full-stack development.
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+Future exploration will include mobile app integration, as both client requirements and personal curiosity drive me toward cross-platform data utilization.
 
-- #### Users (Authentication)
+## Challenges and Discoveries
 
-  Users are auth-enabled collections that have access to the admin panel.
+The learning curve has been manageable, though I've encountered some friction around type documentation—having concrete references for built-in types would improve the developer experience. The block system required building a mental model from scratch, making my first implementation somewhat clunky, but I expect future iterations to be much smoother.
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+## Why This Matters
 
-- #### Media
+Technology evaluation isn't just about features and benchmarks—it's about understanding how tools fit into real-world development workflows and business requirements. This prototype demonstrates my approach to technical decision-making: thorough, hands-on, and always with end-user needs in mind.
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+I'm a nerd who loves cool tech and solving problems. That curiosity drives me to continuously explore new tools, but always with the practical goal of building better solutions for the teams and clients I work with.
 
-### Docker
+---
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+*This exploration reflects my commitment to staying current with technology trends and making informed architectural decisions. Whether leading a team or contributing as a developer, I believe in understanding our tools deeply enough to use them effectively.*
