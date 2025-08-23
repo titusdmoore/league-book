@@ -4,7 +4,12 @@ export const Events: CollectionConfig = {
   slug: 'events',
   fields: [
     { name: 'name', type: 'text' },
-    { name: 'time', type: 'text' },
+    {
+      type: 'row', fields: [
+        { name: 'startTime', type: 'date', timezone: true, admin: { date: { pickerAppearance: 'dayAndTime' } } },
+        { name: 'endTime', type: 'date', timezone: true, admin: { date: { pickerAppearance: 'dayAndTime' } } },
+      ]
+    },
     {
       name: 'type',
       type: 'select',
@@ -20,7 +25,17 @@ export const Events: CollectionConfig = {
         { value: 'misc', label: 'Miscellaneous' },
       ],
     },
-    { name: 'facility', type: 'relationship', relationTo: 'facilities' },
+    {
+      name: 'visibility',
+      type: 'select',
+      options: [
+        { label: 'Public', value: 'public' },
+        { label: 'Private', value: 'private' },
+        { label: 'League', value: 'league' }
+      ],
+      defaultValue: 'public'
+    },
+    { name: 'facility', type: 'relationship', relationTo: 'facilities', required: true },
     { name: 'teams', type: 'relationship', relationTo: 'teams', hasMany: true, maxRows: 2 }
     // TODO: Update to support pulling in facility venues
     /* {

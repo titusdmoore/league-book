@@ -85,6 +85,9 @@ export interface Config {
       leagues: 'leagues';
       events: 'events';
     };
+    facilities: {
+      events: 'events';
+    };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
@@ -137,12 +140,13 @@ export interface User {
   id: number;
   firstName: string;
   lastName: string;
+  profileImage?: (number | null) | Media;
+  roles?: ('player' | 'team_manager' | 'league_manager' | 'super_admin')[] | null;
   teams?: {
     docs?: (number | Team)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
-  roles?: ('player' | 'team_manager' | 'league_manager' | 'super_admin')[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -160,6 +164,43 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -259,11 +300,15 @@ export interface League {
 export interface Event {
   id: number;
   name?: string | null;
-  time?: string | null;
+  startTime?: string | null;
+  startTime_tz?: SupportedTimezones;
+  endTime?: string | null;
+  endTime_tz?: SupportedTimezones;
   type?:
     | ('game' | 'openSkate' | 'stickPuck' | 'freestyleSkate' | 'openField' | 'openCourt' | 'privateEvent' | 'misc')
     | null;
-  facility?: (number | null) | Facility;
+  visibility?: ('public' | 'private' | 'league') | null;
+  facility: number | Facility;
   teams?: (number | Team)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -283,27 +328,13 @@ export interface Facility {
         id?: string | null;
       }[]
     | null;
+  events?: {
+    docs?: (number | Event)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -385,8 +416,9 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
-  teams?: T;
+  profileImage?: T;
   roles?: T;
+  teams?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -421,6 +453,30 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        tablet?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -486,8 +542,12 @@ export interface LeaguesSelect<T extends boolean = true> {
  */
 export interface EventsSelect<T extends boolean = true> {
   name?: T;
-  time?: T;
+  startTime?: T;
+  startTime_tz?: T;
+  endTime?: T;
+  endTime_tz?: T;
   type?: T;
+  visibility?: T;
   facility?: T;
   teams?: T;
   updatedAt?: T;
@@ -507,6 +567,7 @@ export interface FacilitiesSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  events?: T;
   updatedAt?: T;
   createdAt?: T;
 }
