@@ -24,5 +24,11 @@ export const Teams: CollectionConfig = {
       collection: 'leagues',
       on: 'teams',
     },
+    {
+      name: 'events',
+      type: 'join',
+      collection: 'events',
+      on: 'teams'
+    },
   ],
 };

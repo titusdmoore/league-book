@@ -10,6 +10,8 @@ export const Users: CollectionConfig = {
   auth: true,
   fields: [
     // Email added by default
+    { name: 'firstName', type: 'text', required: true },
+    { name: 'lastName', type: 'text', required: true },
     {
       name: 'teams',
       type: 'join',

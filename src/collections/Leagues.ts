@@ -25,6 +25,10 @@ export const Leagues: CollectionConfig = {
       required: true,
     },
     {
+      name: 'location',
+      type: 'text',
+    },
+    {
       name: 'teams',
       type: 'relationship',
       relationTo: 'teams',

@@ -71,6 +71,8 @@ export interface Config {
     media: Media;
     teams: Team;
     leagues: League;
+    events: Event;
+    facilities: Facility;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -81,6 +83,7 @@ export interface Config {
     };
     teams: {
       leagues: 'leagues';
+      events: 'events';
     };
   };
   collectionsSelect: {
@@ -88,6 +91,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     teams: TeamsSelect<false> | TeamsSelect<true>;
     leagues: LeaguesSelect<false> | LeaguesSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -130,6 +135,8 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  firstName: string;
+  lastName: string;
   teams?: {
     docs?: (number | Team)[];
     hasNextPage?: boolean;
@@ -168,6 +175,11 @@ export interface Team {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  events?: {
+    docs?: (number | Event)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -178,6 +190,7 @@ export interface Team {
 export interface League {
   id: number;
   name: string;
+  location?: string | null;
   teams?: (number | Team)[] | null;
   leagueContent?:
     | (
@@ -241,6 +254,40 @@ export interface League {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  name?: string | null;
+  time?: string | null;
+  type?:
+    | ('game' | 'openSkate' | 'stickPuck' | 'freestyleSkate' | 'openField' | 'openCourt' | 'privateEvent' | 'misc')
+    | null;
+  facility?: (number | null) | Facility;
+  teams?: (number | Team)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "facilities".
+ */
+export interface Facility {
+  id: number;
+  name: string;
+  location?: string | null;
+  venues?:
+    | {
+        name?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -280,6 +327,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'leagues';
         value: number | League;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'facilities';
+        value: number | Facility;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -328,6 +383,8 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
   teams?: T;
   roles?: T;
   updatedAt?: T;
@@ -374,6 +431,7 @@ export interface TeamsSelect<T extends boolean = true> {
   roster?: T;
   teamManager?: T;
   leagues?: T;
+  events?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -383,6 +441,7 @@ export interface TeamsSelect<T extends boolean = true> {
  */
 export interface LeaguesSelect<T extends boolean = true> {
   name?: T;
+  location?: T;
   teams?: T;
   leagueContent?:
     | T
@@ -417,6 +476,36 @@ export interface LeaguesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  name?: T;
+  time?: T;
+  type?: T;
+  facility?: T;
+  teams?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "facilities_select".
+ */
+export interface FacilitiesSelect<T extends boolean = true> {
+  name?: T;
+  location?: T;
+  venues?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
