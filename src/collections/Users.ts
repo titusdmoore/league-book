@@ -1,5 +1,5 @@
 import { User } from '@/payload-types'
-import { isSuperAdmin } from '@/utils/accessControl'
+import { isSuperAdmin } from '@/lib/utils';
 import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {

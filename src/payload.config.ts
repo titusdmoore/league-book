@@ -14,6 +14,8 @@ import { Leagues } from './collections/Leagues'
 import { Events } from './collections/Events'
 import { Facilities } from './collections/Facilities'
 
+import { handler } from './lib/mcp'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -27,6 +29,18 @@ export default buildConfig({
   collections: [Users, Media, Teams, Leagues, Events, Facilities],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
+  endpoints: [
+    {
+      method: "post",
+      root: true,
+      path: "/api/mcp",
+    },
+    {
+      method: "get",
+      root: true,
+      path: "/api/mcp",
+    },
+  ],
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
