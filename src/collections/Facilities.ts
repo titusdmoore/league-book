@@ -9,6 +9,13 @@ export const Facilities: CollectionConfig = {
     { name: 'name', type: 'text', required: true },
     { name: 'location', type: 'text' },
     {
+      type: 'row',
+      fields: [
+        { name: 'openTime', type: 'date', admin: { date: { pickerAppearance: 'timeOnly' } } },
+        { name: 'closeTime', type: 'date', admin: { date: { pickerAppearance: 'timeOnly' } } },
+      ]
+    },
+    {
       name: 'venues',
       type: 'array',
       fields: [

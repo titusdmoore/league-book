@@ -321,6 +321,8 @@ export interface Facility {
   id: number;
   name: string;
   location?: string | null;
+  openTime?: string | null;
+  closeTime?: string | null;
   venues?:
     | {
         name?: string | null;
@@ -560,6 +562,8 @@ export interface EventsSelect<T extends boolean = true> {
 export interface FacilitiesSelect<T extends boolean = true> {
   name?: T;
   location?: T;
+  openTime?: T;
+  closeTime?: T;
   venues?:
     | T
     | {
