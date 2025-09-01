@@ -6,7 +6,14 @@ export const Teams: CollectionConfig = {
     useAsTitle: 'name',
   },
   fields: [
-    { name: 'name', type: 'text', required: true, },
+    {
+      type: 'row',
+      fields: [
+
+        { name: 'name', type: 'text', required: true, },
+        { name: 'teamLogo', type: 'upload', relationTo: 'media' },
+      ]
+    },
     {
       name: 'roster',
       type: 'relationship',

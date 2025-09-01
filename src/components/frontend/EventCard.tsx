@@ -1,14 +1,17 @@
 import { Event, Facility } from "@/payload-types";
 
+import { Card as GameCard } from "./events/Game";
+import { Card as DefaultCard } from "./events/Event";
+
 export type EventCardProps = {
   event: Event
 }
 
 export default function EventCard({ event }: EventCardProps) {
-  console.log(event)
-  return (
-    <article className='bg-white rounded-md w-fit p-2'>
-      <h2>{(event.facility as Facility).name}</h2>
-    </article>
-  );
+  switch (event.type) {
+    case 'game':
+      return <GameCard event={event} />
+    default:
+      return <DefaultCard event={event} />
+  }
 }

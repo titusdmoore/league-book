@@ -13,6 +13,7 @@ import { Teams } from './collections/Teams'
 import { Leagues } from './collections/Leagues'
 import { Events } from './collections/Events'
 import { Facilities } from './collections/Facilities'
+import { UserEventAttendances } from './collections/UserEventAttendances'
 
 import { handler } from './lib/mcp'
 
@@ -26,7 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Teams, Leagues, Events, Facilities],
+  collections: [Users, Media, Teams, Leagues, Events, Facilities, UserEventAttendances],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   endpoints: [

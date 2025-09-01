@@ -73,6 +73,7 @@ export interface Config {
     leagues: League;
     events: Event;
     facilities: Facility;
+    userEventAttendances: UserEventAttendance;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -80,10 +81,17 @@ export interface Config {
   collectionsJoins: {
     users: {
       teams: 'teams';
+      eventAttendance: 'userEventAttendances';
     };
     teams: {
       leagues: 'leagues';
       events: 'events';
+    };
+    leagues: {
+      events: 'events';
+    };
+    events: {
+      userAttendance: 'userEventAttendances';
     };
     facilities: {
       events: 'events';
@@ -96,6 +104,7 @@ export interface Config {
     leagues: LeaguesSelect<false> | LeaguesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
+    userEventAttendances: UserEventAttendancesSelect<false> | UserEventAttendancesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -144,6 +153,11 @@ export interface User {
   roles?: ('player' | 'team_manager' | 'league_manager' | 'super_admin')[] | null;
   teams?: {
     docs?: (number | Team)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  eventAttendance?: {
+    docs?: (number | UserEventAttendance)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -209,6 +223,7 @@ export interface Media {
 export interface Team {
   id: number;
   name: string;
+  teamLogo?: (number | null) | Media;
   roster?: (number | User)[] | null;
   teamManager?: (number | null) | User;
   leagues?: {
@@ -290,6 +305,11 @@ export interface League {
           }
       )[]
     | null;
+  events?: {
+    docs?: (number | Event)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -310,6 +330,12 @@ export interface Event {
   visibility?: ('public' | 'private' | 'league') | null;
   facility: number | Facility;
   teams?: (number | Team)[] | null;
+  league?: (number | null) | League;
+  userAttendance?: {
+    docs?: (number | UserEventAttendance)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -335,6 +361,18 @@ export interface Facility {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "userEventAttendances".
+ */
+export interface UserEventAttendance {
+  id: number;
+  event?: (number | null) | Event;
+  user?: (number | null) | User;
+  attendanceStatus?: ('attending' | 'notAttending' | 'possiblyAttending' | 'unknown') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -368,6 +406,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'facilities';
         value: number | Facility;
+      } | null)
+    | ({
+        relationTo: 'userEventAttendances';
+        value: number | UserEventAttendance;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -421,6 +463,7 @@ export interface UsersSelect<T extends boolean = true> {
   profileImage?: T;
   roles?: T;
   teams?: T;
+  eventAttendance?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -486,6 +529,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface TeamsSelect<T extends boolean = true> {
   name?: T;
+  teamLogo?: T;
   roster?: T;
   teamManager?: T;
   leagues?: T;
@@ -535,6 +579,7 @@ export interface LeaguesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  events?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -552,6 +597,8 @@ export interface EventsSelect<T extends boolean = true> {
   visibility?: T;
   facility?: T;
   teams?: T;
+  league?: T;
+  userAttendance?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -572,6 +619,17 @@ export interface FacilitiesSelect<T extends boolean = true> {
         id?: T;
       };
   events?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "userEventAttendances_select".
+ */
+export interface UserEventAttendancesSelect<T extends boolean = true> {
+  event?: T;
+  user?: T;
+  attendanceStatus?: T;
   updatedAt?: T;
   createdAt?: T;
 }

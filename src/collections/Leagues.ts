@@ -18,6 +18,9 @@ const ColumnsBlock: Block = {
 
 export const Leagues: CollectionConfig = {
   slug: 'leagues',
+  admin: {
+    useAsTitle: 'name',
+  },
   fields: [
     {
       name: 'name',
@@ -38,6 +41,12 @@ export const Leagues: CollectionConfig = {
       name: 'leagueContent',
       type: 'blocks',
       blocks: [ContentBlock, ColumnsBlock]
+    },
+    {
+      type: 'join',
+      name: 'events',
+      collection: 'events',
+      on: 'league'
     }
   ],
 };

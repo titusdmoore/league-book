@@ -1,3 +1,4 @@
+import AvailabilityInput from "@/components/frontend/AvailabilityInput";
 import { Client } from "@modelcontextprotocol/sdk/client";
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 
@@ -8,11 +9,10 @@ const client = new Client({
 });
 
 export default async function Page() {
-	await client.connect(transport);
-	const tools = await client.listTools();
-	console.log(tools)
-
 	return (
-		<h1>Hello, World</h1>
+		<>
+			<h1>Hello, World</h1>
+			<AvailabilityInput />
+		</>
 	);
 }

@@ -19,8 +19,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 				<h2>Roster</h2>
 				<ul>
 					{team.roster && team.roster.map((teamMember, index) => {
+						teamMember = teamMember as User;
 						return (
-							<li>{teamMember.firstName} {teamMember.lastName}</li>
+							<li key={index}>{teamMember.firstName} {teamMember.lastName}</li>
 						);
 					})}
 				</ul>

@@ -45,5 +45,11 @@ export const Users: CollectionConfig = {
       collection: 'teams',
       on: 'roster',
     },
+    {
+      name: 'eventAttendance',
+      type: 'join',
+      collection: 'userEventAttendances',
+      on: 'user',
+    },
   ],
 };

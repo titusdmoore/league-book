@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import Link from 'next/link'
 import EventCard from '@/components/frontend/EventCard'
+import { ExternalLink } from 'lucide-react'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -20,12 +21,13 @@ export default async function HomePage() {
       <section className='w-full'>
         <div className='flex justify-between'>
           <h2 className='text-2xl font-bold mb-2'>Upcoming Sessions</h2>
-          <Link href='/' className='text-blue-600'>
+          <Link href='/' className='text-blue-600 flex gap-2'>
             See full calendar
+            <ExternalLink />
           </Link>
         </div>
         {events && (
-          <ul>
+          <ul className='grid grid-cols-4 gap-2'>
             {events.docs.map((event, idx) => {
               return (
                 <li key={idx}>

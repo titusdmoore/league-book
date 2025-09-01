@@ -9,10 +9,13 @@ export type ScheduleLeagueArgs = {
 };
 
 export const scheduleLeague = async ({ league }: ScheduleLeagueArgs) => {
-  const response = await anthropic.messages.create({
+  const response = await anthropic.beta.messages.create({
     model: 'claude-sonnet-4-0',
     max_tokens: 1024,
-    messages: []
+    messages: [],
+    mcp_servers: [
+
+    ],
   });
 
   while (response.content.some(c => c.type === 'tool_use')) {
