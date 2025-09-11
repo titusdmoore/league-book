@@ -1,4 +1,5 @@
 import { Event } from "@/payload-types";
+import { Card as ShadCard, CardContent, CardTitle } from "@/components/ui/card";
 
 export type CardProps = {
   event: Event
@@ -10,9 +11,13 @@ export type PageProps = {
 
 export function Card({ event }: CardProps) {
   return (
-    <article className='bg-white rounded-md w-fit p-2'>
-      <h2>{event.name}</h2>
-    </article>
+    <ShadCard className="dark:bg-zinc-700 dark:border-zinc-600 h-full">
+      <CardTitle className="px-4">
+        <h2 className="text-white">{event.name}</h2>
+      </CardTitle>
+      <CardContent>
+      </CardContent>
+    </ShadCard>
   );
 }
 

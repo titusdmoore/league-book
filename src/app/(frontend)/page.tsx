@@ -17,17 +17,17 @@ export default async function HomePage() {
 
   return (
     <>
-      {user && <h1 className="text-3xl font-bold py-2 mb-4">Welcome, {user.firstName} {user.lastName}</h1>}
+      {user && <h1 className="text-3xl font-bold py-2 mb-4 dark:text-white">Welcome, {user.firstName} {user.lastName}</h1>}
       <section className='w-full'>
         <div className='flex justify-between'>
-          <h2 className='text-2xl font-bold mb-2'>Upcoming Sessions</h2>
+          <h2 className='text-2xl font-bold mb-6 dark:text-white'>Upcoming Sessions</h2>
           <Link href='/' className='text-blue-600 flex gap-2'>
             See full calendar
             <ExternalLink />
           </Link>
         </div>
         {events && (
-          <ul className='grid grid-cols-4 gap-2'>
+          <ul className='grid grid-cols-4 gap-4 mb-6'>
             {events.docs.map((event, idx) => {
               return (
                 <li key={idx}>
@@ -39,7 +39,7 @@ export default async function HomePage() {
         )}
       </section>
       <section>
-        <h2 className='text-2xl font-bold mb-2'>League Standings</h2>
+        <h2 className='text-2xl font-bold mb-2 dark:text-white'>League Standings</h2>
       </section>
     </>
   )

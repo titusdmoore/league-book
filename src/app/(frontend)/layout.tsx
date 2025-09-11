@@ -7,6 +7,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import Link from 'next/link'
 import { Media } from '@/payload-types'
+import { cn } from '@/lib/utils'
 
 import { Cog, Home, UsersRound, Trophy, Calendar } from 'lucide-react';
 
@@ -15,6 +16,8 @@ export const metadata = {
   title: 'Payload Blank Template',
 }
 
+const fullWidthPaths = ["/account/register", "/account/login"];
+
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
   const headers = await getHeaders()
@@ -22,10 +25,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
 
+  const pathname = headers.get('x-next-pathname');
+
   return (
     <html lang="en" className="scheme-light dark:scheme-dark">
       <body className="bg-slate-100 dark:bg-zinc-800 relative flex gap-4 p-2">
-        <aside className="h-[calc(100vh-1rem)] bg-white dark:bg-zinc-700 w-12 top-0 left-0 sticky rounded-md flex flex-col items-center justify-between py-2">
+        <aside className={cn(
+          "h-[calc(100vh-1rem)] bg-white dark:bg-zinc-700 w-12 top-0 left-0 sticky rounded-md flex flex-col items-center justify-between py-2",
+          { "hidden": fullWidthPaths.includes(pathname ?? '') }
+        )}>
           <span className="w-10">
             <button className="w-10 h-10 bg-blue-600 rounded-md mb-2"></button>
             {(user && user.profileImage) && (
@@ -45,28 +53,28 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <nav className='list-none'>
             <li>
               <Link href="/" className='flex justify-center items-center w-10 h-10 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-md mb-2'>
-                <Home />
+                <Home className='dark:stroke-white' />
               </Link>
             </li>
             <li>
               <Link href="/teams" className='flex justify-center items-center w-10 h-10 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-md mb-2'>
-                <Trophy />
+                <Trophy className='dark:stroke-white' />
               </Link>
             </li>
             <li>
               <Link href="/events" className='flex justify-center items-center w-10 h-10 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-md mb-2'>
-                <Calendar />
+                <Calendar className='dark:stroke-white' />
               </Link>
             </li>
             <li>
               <Link href="/teams" className='flex justify-center items-center w-10 h-10 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-md mb-2'>
-                <UsersRound />
+                <UsersRound className='dark:stroke-white' />
               </Link>
             </li>
           </nav>
           <span className="w-10">
             <Link href="/settings" className='flex justify-center items-center w-10 h-10 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-md mb-2'>
-              <Cog />
+              <Cog className='dark:stroke-white' />
             </Link>
             <a
               className="w-10 h-10 rounded-md p-2 flex bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20"
