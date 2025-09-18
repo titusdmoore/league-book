@@ -11,3 +11,14 @@ export function isSuperAdmin(user: User): boolean {
 
   return user.roles!.includes('super_admin');
 }
+
+export function debounce(callback: Function, wait: number): Function {
+  let timeoutId: number;
+
+  return (...args: any[]) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      callback(...args);
+    }, wait);
+  };
+}

@@ -1,12 +1,43 @@
 import { User } from '@/payload-types'
 import { isSuperAdmin } from '@/lib/utils';
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, PayloadRequest } from 'payload'
 
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
     useAsTitle: 'email',
   },
+  endpoints: [
+    {
+      path: '/register',
+      method: 'post',
+      handler: async (req: PayloadRequest) => {
+        let data = await (req.json as Function)();
+        const countRes = await req.payload.count({
+          collection: 'users',
+          where: {
+            email: { equals: data.data.email }
+          }
+        });
+
+        if (countRes.totalDocs !== 0) {
+          return Response.json({
+            message: "Email already in use."
+          }, { status: 401 });
+        }
+
+        delete data.data.confirmPassword;
+        const _createRes = await req.payload.create({
+          collection: 'users',
+          data: data.data
+        });
+
+        return Response.json({
+          message: "Success",
+        });
+      }
+    }
+  ],
   auth: true,
   fields: [
     // Email added by default

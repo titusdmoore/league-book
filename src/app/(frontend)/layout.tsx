@@ -29,7 +29,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en" className="scheme-light dark:scheme-dark">
-      <body className="bg-slate-100 dark:bg-zinc-800 relative flex gap-4 p-2">
+      <body className="bg-slate-100 dark:bg-zinc-800 relative flex gap-4 p-2 min-h-screen">
         <aside className={cn(
           "h-[calc(100vh-1rem)] bg-white dark:bg-zinc-700 w-12 top-0 left-0 sticky rounded-md flex flex-col items-center justify-between py-2",
           { "hidden": fullWidthPaths.includes(pathname ?? '') }
