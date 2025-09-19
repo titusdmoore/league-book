@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import { debounce } from "@/lib/utils";
+import ErrorMessage from "@/components/frontend/ErrorMessage";
 
 const registrationFormSchema = z.object({
 	firstName: z.string().nonempty("First Name is required."),
@@ -19,14 +20,6 @@ const registrationFormSchema = z.object({
 	password: z.string().nonempty("You are required to set a password."),
 	confirmPassword: z.string().nonempty("You are required to confirm your password."),
 });
-
-function ErrorMessage({ error }: { error: FieldError | undefined }) {
-	return (
-		<>
-			{error && (<span role='alert' className="text-red-400">{error.message}</span>)}
-		</>
-	);
-}
 
 export default function RegisterForm() {
 	const {
