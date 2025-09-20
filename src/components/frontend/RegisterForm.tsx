@@ -64,26 +64,26 @@ export default function RegisterForm() {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<div>
 					<Label htmlFor="first-name" className="mb-2 dark:text-white">First Name</Label>
-					<Input className="dark:border-zinc-500 dark:bg-zinc-600 dark:text-slate-200" {...register("firstName")}></Input>
+					<Input className="dark:border-zinc-500 dark:bg-zinc-600 dark:text-slate-200" {...register("firstName")} tabIndex={0}></Input>
 					<ErrorMessage error={errors.firstName} />
 				</div>
 				<div>
 					<Label htmlFor="last-name" className="mb-2 dark:text-white">Last Name</Label>
-					<Input className="dark:border-zinc-500 dark:bg-zinc-600 dark:text-slate-200" {...register("lastName")}></Input>
+					<Input className="dark:border-zinc-500 dark:bg-zinc-600 dark:text-slate-200" {...register("lastName")} tabIndex={0}></Input>
 					<ErrorMessage error={errors.lastName} />
 				</div>
 			</div>
 			<div>
 				<Label htmlFor="email" className="mb-2 dark:text-white">Email Address</Label>
-				<Input className="dark:border-zinc-500 dark:bg-zinc-600 dark:text-slate-200" {...register("email")}></Input>
+				<Input className="dark:border-zinc-500 dark:bg-zinc-600 dark:text-slate-200" {...register("email")} tabIndex={0}></Input>
 				<ErrorMessage error={errors.email} />
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<div>
 					<Label htmlFor="password" className="mb-2 dark:text-white">Password</Label>
 					<div className="relative">
-						<Input type={!passwordVisible ? "password" : "text"} className="dark:border-zinc-500 dark:bg-zinc-600 dark:text-slate-200" {...register("password")} />
-						<button className="absolute top-1/2 -translate-y-1/2 right-2 cursor-pointer z-[99] *:text-white" onClick={(_) => toggleInputVisibility(passwordVisible, setPasswordVisible)}>
+						<Input type={!passwordVisible ? "password" : "text"} className="dark:border-zinc-500 dark:bg-zinc-600 dark:text-slate-200" {...register("password")} tabIndex={0} />
+						<button type="button" className="absolute top-1/2 -translate-y-1/2 right-2 cursor-pointer z-[99] *:text-white" onClick={(_) => toggleInputVisibility(passwordVisible, setPasswordVisible)} tabIndex={1}>
 							{!passwordVisible ? <Eye size={18} /> : <EyeClosed size={18} />}
 						</button>
 					</div>
@@ -107,8 +107,9 @@ export default function RegisterForm() {
 									clearErrors('confirmPassword');
 								}) as Function, 250) as (event: any) => void)
 							})}
+							tabIndex={0}
 						></Input>
-						<button className="absolute top-1/2 -translate-y-1/2 right-2 cursor-pointer z-[99] *:text-white" onClick={(_) => toggleInputVisibility(confirmPasswordVisible, setConfirmPasswordVisible)}>
+						<button type="button" className="absolute top-1/2 -translate-y-1/2 right-2 cursor-pointer z-[99] *:text-white" onClick={(_) => toggleInputVisibility(confirmPasswordVisible, setConfirmPasswordVisible)} tabIndex={1}>
 							{!confirmPasswordVisible ? <Eye size={18} /> : <EyeClosed size={18} />}
 						</button>
 					</div>

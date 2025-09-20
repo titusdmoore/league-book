@@ -16,32 +16,35 @@ export default async function Page() {
 
 
   return (
-    <div className={`grid ${rowTemplates[rowCount as 4 | 5 | 6]} border border-slate-300 rounded-md h-full`}>
-      {(new Array(Math.ceil((firstDay + monthLen) / 7)).fill(0)).map((_, idx) => {
-        return (
-          <div key={idx} className='grid grid-cols-7 not-last:border-b border-slate-300'>
-            {(new Array(7).fill(0)).map((_, jdx) => {
-              let dayNum = "";
-              if (runCount >= firstDay) {
-                let day = dayCount++ + 1;
+    <section className="min-h-screen">
+      <h1>Event Calendar</h1>
+      <div className={`grid ${rowTemplates[rowCount as 4 | 5 | 6]} border border-slate-300 rounded-md h-full`}>
+        {(new Array(Math.ceil((firstDay + monthLen) / 7)).fill(0)).map((_, idx) => {
+          return (
+            <div key={idx} className='grid grid-cols-7 not-last:border-b border-slate-300'>
+              {(new Array(7).fill(0)).map((_, jdx) => {
+                let dayNum = "";
+                if (runCount >= firstDay) {
+                  let day = dayCount++ + 1;
 
-                if (day <= monthLen) {
-                  dayNum = day.toString();
+                  if (day <= monthLen) {
+                    dayNum = day.toString();
+                  }
                 }
-              }
-              runCount++;
+                runCount++;
 
-              return (
-                <div key={jdx} className='not-last:border-r border-slate-300 pt-2'>
-                  <span className="ml-2">{dayNum}</span>
-                  <ul>
-                  </ul>
-                </div>
-              )
-            })}
-          </div>
-        )
-      })}
-    </div>
+                return (
+                  <div key={jdx} className='not-last:border-r border-slate-300 pt-2'>
+                    <span className="ml-2 dark:text-white">{dayNum}</span>
+                    <ul>
+                    </ul>
+                  </div>
+                )
+              })}
+            </div>
+          )
+        })}
+      </div>
+    </section>
   );
 }
