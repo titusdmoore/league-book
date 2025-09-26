@@ -10,6 +10,7 @@ import { Media } from '@/payload-types'
 import { cn } from '@/lib/utils'
 
 import { Cog, Home, UsersRound, Trophy, Calendar } from 'lucide-react';
+import { redirect } from 'next/navigation'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -26,6 +27,17 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { user } = await payload.auth({ headers })
 
   const pathname = headers.get('x-next-pathname');
+
+  // TODO: Modify this redirect to only redirect pages that REQUIRE a user (league list wouldn't require a user)
+  const noAuthPaths = [
+    "/account/login",
+    "/account/register",
+  ];
+
+  console.log(pathname, noAuthPaths, pathname && !noAuthPaths.includes(pathname) && !user)
+  if (pathname && !noAuthPaths.includes(pathname) && !user) {
+    redirect('/account/login');
+  }
 
   return (
     <html lang="en" className="scheme-light dark:scheme-dark">
@@ -57,7 +69,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
               </Link>
             </li>
             <li>
-              <Link href="/teams" className='flex justify-center items-center w-10 h-10 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-md mb-2'>
+              <Link href="/leagues" className='flex justify-center items-center w-10 h-10 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-md mb-2'>
                 <Trophy className='dark:stroke-white' />
               </Link>
             </li>
@@ -76,22 +88,24 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <Link href="/settings" className='flex justify-center items-center w-10 h-10 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-md mb-2'>
               <Cog className='dark:stroke-white' />
             </Link>
-            <a
-              className="w-10 h-10 rounded-md p-2 flex bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20"
-              href={payloadConfig.routes.admin}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <picture>
-                <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
-                <Image
-                  alt="Payload Logo"
-                  height={35}
-                  src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg"
-                  width={35}
-                />
-              </picture>
-            </a>
+            {user && user.roles?.includes('super_admin') && (
+              <Link
+                className="w-10 h-10 rounded-md p-2 flex bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20"
+                href={payloadConfig.routes.admin}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <picture>
+                  <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
+                  <Image
+                    alt="Payload Logo"
+                    height={35}
+                    src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg"
+                    width={35}
+                  />
+                </picture>
+              </Link>
+            )}
           </span>
         </aside>
         <main className='w-full'>{children}</main>

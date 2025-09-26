@@ -8,5 +8,5 @@ export async function middleware(request: NextRequest) {
     request: {
       headers: requestHeaders,
     }
-  })
-}
+  });
+};

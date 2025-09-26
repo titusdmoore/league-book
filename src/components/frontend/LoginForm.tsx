@@ -11,6 +11,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import { debounce } from "@/lib/utils";
 import ErrorMessage from "@/components/frontend/ErrorMessage";
+import Link from "next/link";
 
 const loginFormSchema = z.object({
   email: z.string().email().nonempty("Email is required."),
@@ -79,7 +80,10 @@ export default function LoginForm() {
         </div>
         <ErrorMessage error={errors.password} />
       </div>
-      <Button type="submit" tabIndex={0}>Login</Button>
+      <div className="flex items-center gap-2 dark:text-white">
+        <Button type="submit" tabIndex={0}>Login</Button>
+        <p>or <Link href="/account/register" className="underline">Register for an account.</Link></p>
+      </div>
     </form>
   );
 }
